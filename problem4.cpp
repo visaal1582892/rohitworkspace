@@ -3,7 +3,7 @@
 #include<string.h>
 #include<malloc.h>
 using namespace std;
-string f(string y,int x)
+string f(char y[],int x)//we can also write string y or char *y in place of char y[]
 {
     int i;
     char b;
