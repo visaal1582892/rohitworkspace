@@ -18,5 +18,6 @@ int main(int argc, char const *argv[])
         cin>>p[i];
     }
     func(p);
+    cout<<p[4];
     return 0;
 }
