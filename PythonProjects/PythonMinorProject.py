@@ -170,7 +170,7 @@ pred = model[6].predict(my_survival)
 print(pred)
 
 if pred == 0:
-  print('Oh no! You didn't make it')
+  print('Oh no! You didnt make it')
 else:
   print('Nice! You survived')
   
