@@ -15,7 +15,7 @@ class MergeSort
         }
         int i=0;
         int j=0;
-        int k=0;
+        int k=l;
         while ((i<arr1.length)&&j<(arr2.length)) {
             if (arr1[i]<=arr2[j]) {
                 a[k]=arr1[i];
