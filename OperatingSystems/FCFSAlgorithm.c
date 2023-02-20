@@ -73,6 +73,8 @@ void fcfs(struct ProcessInfo* p,int *v,int n)
 }
 int main(int argc, char const *argv[])
 {
+    int wtsum=0,tatsum=0;
+    float avgwt,avgtat;
     int n;
     printf("enter number of processes you want to give ");
     scanf("%d",&n);
@@ -88,10 +90,15 @@ int main(int argc, char const *argv[])
         scanf("%d",&p[i].bt);
     }
     fcfs(p,visited,n);
+    printf("waiting time        turnaround time\n");
     for (int i = 0; i < n; i++)
     {
-        printf("%d\n",p[i].wt);
+        printf("     %d                    %d       \n",p[i].wt,p[i].tat);
+        wtsum=wtsum+p[i].wt;
+        tatsum=tatsum+p[i].tat;
     }
-    
+    avgwt=(float)wtsum/n;
+    avgtat=(float)tatsum/n;
+    printf("average waiting time is %f and average turnaround time is %f",avgwt,avgtat);    
     return 0;
 }
