@@ -23,10 +23,6 @@ int main(int argc, char const *argv[])
             cout<<l;
             l-=1;
         }
-        for (int j = n-1; j >= i ; j--)
-        {
-            cout<<" ";
-        }
         cout<<"\n";
     }
     
