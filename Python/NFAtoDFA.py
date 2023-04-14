@@ -1,13 +1,18 @@
+#imported ast class which is used to take inputs from a file
 import ast
+#created a class
 class NFAtoDFA:
-    def __init__(self,InitialState):
+#creating constuctor for the class with initial state and input file as arguments
+    def __init__(self,InitialState,InputFile):
         self._InitialState=InitialState
-        fp=open("InputForNFAtoDFA.txt")
+        self._InputFile=InputFile
+        fp=open(self._InputFile)
         strinput=fp.readlines()
         self._TransitionFunction=ast.literal_eval(strinput[0])
         self._InputAlphabet=ast.literal_eval(strinput[1])
         self._FinalStatesOfNfa=ast.literal_eval(strinput[2])
         self._FinalStatesOfDfa=set()
+#function definition used to convert nfa to dfa
     def NFAtoDFA(self):
         FinalDFA={}
         visited=set()
@@ -40,8 +45,15 @@ class NFAtoDFA:
         print("Transition_Function of Final DFA is :")  
         print(FinalDFA)
         print("Final states of DFA are ")
-        print(self._FinalStatesOfDfa)       
-a=NFAtoDFA(1)
+        print(self._FinalStatesOfDfa)   
+print("enter file name or path with inputs in below order")
+#Desciption of form of input to be given 
+print("enter the transitions in set representation in first line")
+print("enter input alphabet in form of set in second line")
+print("enter set of final states of NFA in third line")
+#taking filename as input
+InputFile=input();    
+a=NFAtoDFA(1,InputFile)
 a.NFAtoDFA()
 
 
