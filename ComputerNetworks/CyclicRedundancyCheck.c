@@ -11,7 +11,6 @@ void leftshift(int* data,int* visited,int d,int* tp,int p,int* v)
 {
     if ((*v)==d)
     {
-        tp[0]=0;
         (*v)++;
         return;   
     }
