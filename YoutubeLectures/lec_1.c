@@ -2,7 +2,7 @@
 /*int 
 float
 double
-char.....
+char......
 */
 //These data types are used to say whether the given value is integer,character,real number and so  on
 int main(int argc, char const *argv[])
