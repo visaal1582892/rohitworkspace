@@ -1,0 +1,63 @@
+type : (      value : (
+type : INT      value : 2
+type : +      value : +
+type : INT      value : 3
+type : )      value : )
+type : *      value : *
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 3
+type : *      value : *
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 3
+type : +      value : +
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 5
+type : -      value : -
+type : INT      value : 5
+type : (      value : (
+type : INT      value : 2
+type : +      value : +
+type : INT      value : 3
+type : )      value : )
+type : *      value : *
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 3
+type : *      value : *
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 3
+type : +      value : +
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : (      value : (
+type : INT      value : 2
+type : +      value : +
+type : INT      value : 3
+type : )      value : )
+type : *      value : *
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 3
+type : *      value : *
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : INT      value : 3
+type : +      value : +
+type : INT      value : 5
+type : NEWLINE      value : 
+
+type : ID      value : 5
+type : +      value : +
+type : ID      value : 5

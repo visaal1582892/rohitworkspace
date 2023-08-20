@@ -13,12 +13,16 @@ class parser(Parser):
     #defining prescedence of operators
     precedence=(('left',NEWLINE),('left','+','-'),('left','*','/'))
     #defining grammar for language
-    @_('L NEWLINE E')
-    def L(self,value):
-        print(value.E)
+    @_('E NEWLINE E')
+    def E(self,value):
+        print(value.E0) if value.E0 is not None else ''
+        print(value.E1) if value.E1 is not None else ''
     @_('INT')
     def E(self,value):
         return value.INT
+    @_('ID')
+    def E(self,value):
+        return value.ID
     @_('E "+" E')
     def E(self,value):
         return value.E0+value.E1
@@ -37,15 +41,13 @@ class parser(Parser):
     @_('')
     def E(self,value):
         return
-    @_('E')
-    def L(self,value):
-        print(value.E)
 input=open(args.inputfile,'r')
 l=lexer()
 p=parser()
 if args.o is None:
-    result=p.parse(l.tokenize(input.read()))
-    print(result)
+    p.parse(l.tokenize(input.read()))
 else:
-    pass
+    output=open(args.o[0],'a')
+    for tok in l.tokenize(input.read()):
+        output.write(f"type : {tok.type}      value : {tok.value}\n")
 

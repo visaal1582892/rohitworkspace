@@ -13,3 +13,7 @@ class lexer(Lexer):
     def INT(self,t):
         t.value=int(t.value)
         return t     
+    @_('[a-zA-Z_][a-zA-Z0-9_]*')
+    def ID(self,t):
+        t.value=int(input(f"enter the value if {t.value}"))
+        return t
