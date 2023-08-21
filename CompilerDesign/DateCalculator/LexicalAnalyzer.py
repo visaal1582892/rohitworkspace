@@ -1,4 +1,7 @@
 from sly import Lexer
+def daysofmonth(month,year):
+    tdm=31 if month in [1,3,5,7,8,10,12] else 30 if month in [4,6,9,11] else 29 if leapyear(year) else 28
+    return tdm
 def leapyear(a):
     if a%4==0:
         if a%100!=0:
@@ -14,7 +17,7 @@ class date:
         self.day=int(dateinput[0:2])
         self.month=int(dateinput[3:5])
         self.year=int(dateinput[6:])
-        self.tdm=31 if self.month in [1,3,5,7,8,10,12] else 30 if self.month in [4,6,9,11] else 29 if leapyear(self.year) else 28
+        self.tdm=daysofmonth(self.month,self.year)
     def __add__(self,other):
         day=self.day
         month=self.month
@@ -29,14 +32,32 @@ class date:
                 if(month>12):
                     month%=12
                     year+=1
-                tdm=31 if month in [1,3,5,7,8,10,12] else 30 if month in [4,6,9,11] else 29 if leapyear(year) else 28
+                tdm=daysofmonth(month,year)
             else:
                 day=other+1
                 other=0
         return f"{day : 02}/{month : 02}/{year}"
+    def __sub__(self,other):
+        year=other.year
+        month=other.month
+        tdm=other.tdm
+        result=tdm-other.day
+        month+=1
+        if month>12:
+            month%=12
+            year+=1
+        while(month!=self.month or year!=self.year):
+            tdm=daysofmonth(month,year)
+            result+=tdm
+            month+=1
+            if month>12:
+                month%=12
+                year+=1
+        result+=self.day
+        return result
 class lexer(Lexer):
     tokens={DATE,INT}
-    literals={'+'}
+    literals={'+','-'}
     DATE=r'\d\d/\d\d/\d\d\d\d'
     INT=r'\d+'
     @_('\d\d/\d\d/\d\d\d\d')
