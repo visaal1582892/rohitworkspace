@@ -15,6 +15,8 @@ class NameAst(Ast):
         self.symbol.print()
     def getDataType(self):
         return self.symbol.getDataType()
+    def getName(self):
+        return self.symbol.getSymbolName()
 class NumberAst(Ast):
     def __init__(self,number):
         self.number=number
