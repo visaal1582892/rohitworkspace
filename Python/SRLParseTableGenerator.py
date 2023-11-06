@@ -46,6 +46,20 @@ for line in grammar:
                 a=line[i]
             grammarDict[line[0]][prodno].append(a)
         i+=1
+class State:
+    inc=0
+    states=set()
+    def __init__(self):
+        State.inc+=1
+        self.name=f"s{State.inc}"
+        self.items={}
+        self.edges={}
+    def closure(self,non_terminal,augmentedGrammarDict):
+        closureDict={}
+        for item in augmentedGrammarDict[non_terminal]:
+            if item[-2] in non_terminals:
+                closureDict=closureDict | {non_terminal : augmentedGrammarDict[non_terminal]} | self.closure(non_terminal,augmentedGrammarDict)
+        return closureDict   
 class ParseTableGenerator:
     def __init__(self,grammarDict):
         self.grammarDict=grammarDict
@@ -129,11 +143,6 @@ class ParseTableGenerator:
                         ruleList.remove([])
         self.grammarDict=self.grammarDict | dict
         print(self.grammarDict)
-    def toString(self):
-        for ruleList in self.grammarDict.values():
-            for ruleIndex in range(len(ruleList)):
-                ruleList[ruleIndex]=''.join(ruleList[ruleIndex])
-        print(self.grammarDict)
     def last(self,var):
         lastSet=set()
         lastDict={}
@@ -150,43 +159,25 @@ class ParseTableGenerator:
                 for i in (self.last(rule[-1])[0] - {'epsilon'} | self.last(rule[-2])[0]):
                     lastDict[i]=rule
         return (lastSet,lastDict)
-    def precede(self,var):
-        preset=set()
-        if var==startSymbol:
-            preset.add('$')
-        for (lhs,rules) in self.grammarDict.items():
-            for rule in rules:
-                for itemIndex in range(len(rule)):
-                    if rule[itemIndex]==var:
-                        if (itemIndex-1)<0:
-                            if lhs!=var:
-                                    preset=preset | self.precede(lhs)
-                                    return preset
-                        else:
-                            if rule[itemIndex-1] in terminals-{'epsilon'}:
-                                preset.add(rule[itemIndex-1])
-                            elif rule[itemIndex-1] in non_terminals and 'epsilon' not in self.last(rule[itemIndex-1][0]):
-                                preset=preset | self.last(rule[itemIndex-1])[0]
-                            elif rule[itemIndex-1] in non_terminals and 'epsilon' in self.last(rule[itemIndex-1][0]):
-                                preset=preset | self.last(rule[itemIndex-1])[0]-{'epsilon'} | self.precede(lhs)
-        return preset
-    def parseTable(self):
-        tableColumns=list(terminals-{'epsilon'})+['$']
-        parseTable=pd.DataFrame(columns=tableColumns)
-        for i in non_terminals:
-            for j in tableColumns:
-                parseTable.at[i,j]='e'
-        parseTable.index=non_terminals
-        for non_terminal in non_terminals:
-            for lastItem in self.last(non_terminal)[0]-{'epsilon'}:
-                parseTable.at[non_terminal,lastItem]=self.last(non_terminal)[1][lastItem]
-            if 'epsilon' not in self.last(non_terminal)[0]:
-                pass
-            else:
-                for precedeItem in self.precede(non_terminal):
-                    parseTable.at[non_terminal,'$']=self.last(non_terminal)[1]['epsilon']
-        print(parseTable)
+    def augmentedGrammarGenerator(self):
+        self.augmentedGrammarDict=self.grammarDict
+        for ruleList in self.augmentedGrammarDict.values():
+            for rule in ruleList:
+                rule.append('.')
+        self.augmentedStartSymbol=random.choice(variableList)
+        non_terminals.add(self.augmentedStartSymbol)
+        variableList.remove(self.augmentedStartSymbol)
+        self.augmentedGrammarDict[self.augmentedStartSymbol]=[[f"{startSymbol}",'.']]
+        print(self.augmentedGrammarDict)
+    def statesGenerator(self):
+        self.states={}
+        self.initialState=State()
+        State.states.add(self.initialState)
+        self.initialState.items[self.augmentedStartSymbol]=self.augmentedGrammarDict[self.augmentedStartSymbol]
+        self.initialState.items = self.initialState.items | self.initialState.closure(startSymbol,self.augmentedGrammarDict)
+        print(self.initialState.items)
 parseTable=ParseTableGenerator(grammarDict)
 parseTable.rightRecursionElimination()
 parseTable.rightFactoring()
-parseTable.parseTable()
+parseTable.augmentedGrammarGenerator()
+parseTable.statesGenerator()
