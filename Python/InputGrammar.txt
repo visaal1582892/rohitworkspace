@@ -1,6 +1,0 @@
-{'id','par','ser','num','end',';'}
-{'B','L','C'}
-'L'
-L -> C;L | C;
-C -> serB | parB | id | num
-B -> CB | end
