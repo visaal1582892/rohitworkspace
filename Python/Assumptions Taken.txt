@@ -1,0 +1,29 @@
+
+Assumptions :
+
+1.) Here I used 'epsilon' string value to represent epsilon in the Grammar.
+2.) Here I assumed Grammar as dictionary of list of lists where keys of dictionary are non terminals and their respective values are list of lists where each list 
+    represents a production.
+    
+    example :
+    
+    L -> C;L | C;
+    C -> serB | parB | id | num
+    B -> CB | end
+    
+    is stored as,
+    
+    {'B': [['C', 'B'], ['end']], 
+     'C': [['ser', 'B'], ['par', 'B'], ['id'], ['num']], 
+     'L': [['C', ';', 'L'], ['C', ';']] }
+   
+3.) Here I considered Capital letters as non terminals and small letters as terminals in above Grammar.
+
+Way of Giving Input:
+
+1.) In first Line of input give terminals as {'id','par',.....} (set format with terminals as strings)
+2.) In second Line of input give non terminals as {'B','L',....} (set format with non_terminals as strings)
+3.) In third line Give start symbol as a string.
+4.) from forth line give grammar as shown below.
+5.) Must seperate LHS and RHS by ' -> ' i.e arrow with one space before and after.
+6.) Different productions of same nonterminal must be seperated by ' | ' i.e | symbol with single space before and after.
