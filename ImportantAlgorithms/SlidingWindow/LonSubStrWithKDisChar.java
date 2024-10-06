@@ -1,34 +1,31 @@
-import java.util.ArrayList;
-import java.lang.Math;
+// Given a string, find the length of the longest substring in it with no more than K distinct characters.
+
+import java.util.HashMap;
 
 public class LonSubStrWithKDisChar {
     public static int lonSubStrLen(String str, int k){
-        int start = 0;
-        int maxLength = 0;
-        ArrayList<Character> list = new ArrayList<>();
-        for (int end = 0; end < str.length(); end++) {
-            if (!(list.contains(str.charAt(end)))) {
-                list.add(str.charAt(end));
+        HashMap<Character,Integer> map=new HashMap<>();
+        int start=0;
+        int n=str.length();
+        int maxLen=0;
+        for(int end=0; end<n; end++){
+            char ec=str.charAt(end);
+            map.put(ec, map.getOrDefault(ec, 0)+1);
+            if(map.size()<=k){
+                maxLen=Integer.max(maxLen, end-start+1);
             }
-            if (list.size()>k) {
-                maxLength = Math.max(maxLength, end-1-start+1);
-                while (list.size()!=k) {
-                    String subStr = str.substring(start+1, end+1);
-                    if (!(subStr.contains(str.substring(start, start+1)))) {
-                        list.remove(list.indexOf(str.charAt(start)));
-                    }
-                    start++;
-                }
-            }
-            else if (list.size()==k && end==str.length()-1) {
-                maxLength = Math.max(maxLength, end-start+1);
+            else{
+                char sc=str.charAt(start);
+                map.put(sc,map.get(sc)-1);
+                map.remove(sc,0);
+                start++;
             }
         }
-        return maxLength;
+        return maxLen;
     }
     public static void main(String[] args) {
-        String str = "abaaacdabacdbaaaaa";
-        int k = 3;
+        String str = "babbcccc";
+        int k = 2;
         System.out.println(lonSubStrLen(str, k));
     }
 }

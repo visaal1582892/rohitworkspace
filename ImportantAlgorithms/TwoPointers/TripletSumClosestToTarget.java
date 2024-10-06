@@ -1,41 +1,41 @@
-package ImportantAlgorithms.TwoPointers;
-/**
- * TripletSumClosestToTarget
- */
+//  Given an array of unsorted numbers and a target number, find a triplet in the array whose sum is as close to the target number as possible, return the sum of the triplet. If there are more than one such triplet, return the sum of the triplet with the smallest sum.
+
 import java.util.Arrays;
+import java.lang.Math;
 public class TripletSumClosestToTarget {
     public static int tripletSumClosestToTarget(int[] array, int target){
-        int n = array.length;
         Arrays.sort(array);
-        int max = 0;
-        for (int i = 0; i < n; i++) {
-            if (i>0 && array[i] == array[i-1]) {
+        int n=array.length;
+        int minDiff=Integer.MAX_VALUE;
+        for(int i=0; i<n-2; i++){
+            if (i!=0 && array[i-1]==array[i]) {
                 continue;
             }
-            int pairSum = target-array[i];
-            int left = i+1;
-            int right = n-1;
-            while(left<right){
-                int currentSum = array[left]+array[right];
-                if (currentSum == pairSum) {
-                    return target;
+            int targetSum=target-array[i];
+            int p1=i+1;
+            int p2=n-1;
+            int diff=0;
+            while(p1<p2){
+                diff=Math.abs(targetSum-(array[p1]+array[p2]));
+                if(diff<minDiff){
+                    minDiff=diff;
                 }
-                else if (currentSum < pairSum) {
-                    if (currentSum+array[i] > max) {
-                        max = currentSum+array[i];
-                    }
-                    left++;
+                if(array[p1]+array[p2]<targetSum){
+                    p1++;
+                }
+                else if(array[p1]+array[p2]>targetSum){
+                    p2--;
                 }
                 else{
-                    right--;
+                    return target;
                 }
             }
         }
-        return max;
+        return Math.abs(target-minDiff);
     }
     public static void main(String[] args) {
-        int array[] = {1, 0, 1, 1};
-        int target = 100;
+        int array[] = {-3, -1, 1, 2};
+        int target = 1;
         System.out.println(TripletSumClosestToTarget.tripletSumClosestToTarget(array, target));
     }
 }

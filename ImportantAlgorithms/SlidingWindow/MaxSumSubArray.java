@@ -1,33 +1,41 @@
+// Given an array of positive numbers and a positive number ‘k’,
+// find the maximum sum of any contiguous subarray of size ‘k’.
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// Here we can also use brute force method which needs N*K time complexity too reduce it to N we use Sliding Window.
+// Here we can also use brute force method which needs N*K time complexity to reduce it to N we use Sliding Window.
 
 public class MaxSumSubArray {
-    public static ArrayList<Integer> maxSumSubArray(ArrayList<Integer> list, int k){
-        int n = list.size();
-        int max = 0;
-        ArrayList<Integer> subArray = new ArrayList<>(k);
-        int start = 0;
-        int sum = 0;
+    public static int[] maxSumSubArray(int[] array, int k){
+        int start=0;
+        int n=array.length;
+        int maxSum=0;
+        int sum=0;
+        int resultStart=0;
+        int resultEnd=0;
         for(int end=0; end<n; end++){
-            sum += list.get(end);
-            if (end >= k-1) {
-                if(sum>max){
-                    max = sum;
-                    subArray = new ArrayList<Integer>(list.subList(start, end+1));
+            sum+=array[end];
+            if(end>=(k-1)){
+                if (sum>maxSum) {
+                    sum=maxSum;
+                    resultStart=start;
+                    resultEnd=end;
                 }
-                sum -= list.get(start);
+                sum-=array[start];
                 start++;
             }
         }
-        return subArray;
+        int [] result = Arrays.copyOfRange(array, resultStart, resultEnd+1);
+        return result;
     }
     public static void main(String[] args) {
         int k=3;
-        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(2, 1, 5, 1, 3, 2));
-        ArrayList<Integer> resultList = new ArrayList<>(list.size()-k+1);
-        resultList = MaxSumSubArray.maxSumSubArray(list, k);
-        System.out.println(resultList);
+        int [] array = {2,1,5,1,3,2};
+        int [] result=MaxSumSubArray.maxSumSubArray(array, k);
+        System.out.println(Arrays.toString(result));
+    }
+    public static ArrayList<Integer> maxSumSubArray(ArrayList<Integer> list, int k) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'maxSumSubArray'");
     }
 }

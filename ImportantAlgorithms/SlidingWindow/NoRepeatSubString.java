@@ -1,32 +1,25 @@
-import java.util.ArrayList;
-import java.lang.Math;
+// Given a string, find the length of the longest substring which has no repeating characters.
+
+import java.util.HashMap;
 
 public class NoRepeatSubString {
     public static int noRepeatSubString(String str){
-        int start = 0;
-        int maxLen = 0;
-        ArrayList<Character> list = new ArrayList<>();
-        for (int end = 0; end < str.length(); end++) {
-            if (!(list.contains(str.charAt(end)))) {
-                list.add(str.charAt(end));
-                if (end==(str.length()-1)) {
-                    maxLen = Math.max(maxLen, end-start+1);
-                }
+        int start=0;
+        int n=str.length();
+        int maxLen=0;
+        HashMap<Character,Integer> map=new HashMap<>();
+        for(int end=0; end<n; end++){
+            char ec=str.charAt(end);
+            if(map.containsKey(ec)){
+                start=Integer.max(start,map.get(ec)+1);
             }
-            else{
-                maxLen = Math.max(maxLen, end-1-start+1);
-                while (list.contains(str.charAt(end))) {
-                    if (list.contains(str.charAt(start))) {
-                        list.remove(list.indexOf(str.charAt(start)));
-                    }
-                    start++;
-                }
-            }
+            map.put(ec,end);
+            maxLen=Integer.max(maxLen,end-start+1);
         }
         return maxLen;
     }
     public static void main(String[] args) {
-        String str = "abccdeabcdeagh";
+        String str = "abccde";
         System.out.println(NoRepeatSubString.noRepeatSubString(str));
     }
 }

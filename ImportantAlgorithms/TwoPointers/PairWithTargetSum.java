@@ -1,34 +1,34 @@
+// Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target.
+
+import java.util.Arrays;
+
 public class PairWithTargetSum {
     public static int[] pairWithTargetSum(int[] array, int targetSum){
-        int start = 0;
-        int end = array.length-1;
-        while (start!=end && array[start]+array[end]!=targetSum) {
-            if (array[start]+array[end]>targetSum) {
-                end--;
+        int n=array.length;
+        int p1=0;
+        int p2=n-1;
+        int sum=0;
+        while(p1<p2){
+            sum=array[p1]+array[p2];
+            if(sum<targetSum){
+                p1++;
+            }
+            else if(sum>targetSum){
+                p2--;
             }
             else{
-                start++;
+                return new int[] {p1,p2};
             }
         }
-        if (array[start]+array[end]==targetSum) {
-            return new int[] {start, end};
-        }
-        else{
-            return new int[] {-1, -1};
-        }
+        return new int[] {-1,-1};
     }
     public static void main(String[] args) {
-        int[] array = {2, 5, 9, 11};
-        int targetSum = 11;
+        int[] array = {1, 2, 3, 4, 6};
+        int targetSum = 6;
         int [] output = PairWithTargetSum.pairWithTargetSum(array, targetSum);
-        for(int i : output){
-            System.out.print(i+" ");
-        }
+        System.out.println(Arrays.toString(output));
     }
 }
-
-// Here better solution is we can write a condition in while loop as start < end
-// then code length can be minimized.
 // Here we can also iterate each and every element and calculate other element
 // using binary search, the time complexity will be NlogN. but in above two pointer
 // approach we need only N which is better.
